@@ -15,26 +15,26 @@ export function ReminderQueue() {
 	const sent = useBookingStore((s) => s.sentReminders);
 	const markSent = useBookingStore((s) => s.markReminderSent);
 	const queue = useMemo(
-		() => buildReminderQueue(bookings, settings.reminderHoursBefore, sent).slice(0, 8),
+		() => buildReminderQueue(bookings, settings.reminderHoursBefore, sent).slice(0, 6),
 		[bookings, settings.reminderHoursBefore, sent],
 	);
 	const due = queue.filter((r) => r.status === "due").length;
 
 	return (
-		<section className="rounded-xl border bg-background">
-			<header className="flex items-center justify-between border-b p-4">
+		<section className="overflow-hidden rounded-2xl border bg-card shadow-[var(--shadow-card)]">
+			<header className="flex items-center justify-between border-b p-5">
 				<div>
 					<h2 className="flex items-center gap-2 font-semibold">
-						<BellRing className="size-4 text-rose-500" /> Reminder queue
+						<span className="bg-brand-gradient flex size-6 items-center justify-center rounded-md text-white"><BellRing className="size-3.5" /></span> Reminders
 					</h2>
 					<p className="text-xs text-muted-foreground">
 						{settings.reminderHoursBefore.map((h) => `${h}h`).join(" & ")} before each appointment · next 72 hours
 					</p>
 				</div>
-				{due > 0 && <Badge variant="destructive">{due} due</Badge>}
+				{due > 0 && <Badge className="bg-brand-gradient rounded-full border-0 text-white">{due} due</Badge>}
 			</header>
 			<ul className="divide-y">
-				{queue.length === 0 && <li className="p-4 text-sm text-muted-foreground">No reminders in the next 72 hours.</li>}
+				{queue.length === 0 && <li className="px-5 py-8 text-center text-sm text-muted-foreground">All caught up. No reminders due in the next 72 hours.</li>}
 				{queue.map((r) => {
 					const message = renderTemplate(settings.reminderTemplate, r.booking, settings.businessName);
 					const wa = r.booking.customer?.phone ? whatsappLink(r.booking.customer.phone, message) : null;
@@ -48,7 +48,7 @@ export function ReminderQueue() {
 									{r.booking.customer?.name} · {r.booking.title}
 								</p>
 								<p className="text-xs text-muted-foreground">
-									{r.hoursBefore}h reminder · {r.status === "due" ? "due now" : `sends ${format(r.sendAt, "EEE HH:mm")}`}
+									{r.hoursBefore}h before · {r.status === "due" ? <span className="font-medium text-brand">due now</span> : `sends ${format(r.sendAt, "EEE HH:mm")}`}
 								</p>
 							</div>
 							{r.status === "sent" ? (
@@ -58,14 +58,14 @@ export function ReminderQueue() {
 							) : (
 								<div className="flex gap-1">
 									{wa && (
-										<Button size="icon" variant="outline" className="size-8" asChild aria-label="Send on WhatsApp">
+										<Button size="icon" variant="outline" className="size-8 rounded-lg" asChild aria-label="Send on WhatsApp">
 											<a href={wa} target="_blank" rel="noopener noreferrer" onClick={() => markSent(r.key)}>
 												<MessageCircle />
 											</a>
 										</Button>
 									)}
 									{mail && (
-										<Button size="icon" variant="outline" className="size-8" asChild aria-label="Send by email">
+										<Button size="icon" variant="outline" className="size-8 rounded-lg" asChild aria-label="Send by email">
 											<a href={mail} onClick={() => markSent(r.key)}>
 												<Mail />
 											</a>
@@ -74,7 +74,7 @@ export function ReminderQueue() {
 									<Button
 										size="icon"
 										variant="ghost"
-										className="size-8"
+										className="size-8 rounded-lg"
 										aria-label="Mark as sent"
 										onClick={() => {
 											markSent(r.key);

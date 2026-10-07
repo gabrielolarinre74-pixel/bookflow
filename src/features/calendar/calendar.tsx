@@ -9,7 +9,7 @@ export function Calendar() {
 	return (
 		<CalendarProvider view="week">
 			<DndProvider>
-				<div className="w-full rounded-xl border bg-background">
+				<div className="w-full overflow-hidden rounded-2xl border bg-card shadow-[var(--shadow-card)]">
 					<CalendarHeader />
 					<CalendarBody />
 				</div>
