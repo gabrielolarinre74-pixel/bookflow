@@ -3,7 +3,7 @@
 import { Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { SiteNav } from "@/components/site-nav";
+import { PageHeader } from "@/components/site-nav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -70,12 +70,8 @@ export default function SettingsPage() {
 
 	return (
 		<>
-			<SiteNav />
-			<main className="mx-auto max-w-5xl space-y-6 px-4 py-6">
-				<div>
-					<h1 className="text-2xl font-bold tracking-tight">Settings</h1>
-					<p className="text-muted-foreground">Everything here updates the booking page and calendar instantly.</p>
-				</div>
+			<PageHeader eyebrow="Workspace" title="Settings" description="Changes apply to your booking page and calendar straight away." />
+			<div className="max-w-5xl space-y-6">
 
 				<Card title="Business" description="Shown on your booking page and in reminder messages.">
 					<div className="grid gap-4 sm:grid-cols-3">
@@ -216,22 +212,22 @@ export default function SettingsPage() {
 						<RotateCcw /> Reset demo data
 					</Button>
 				</Card>
-			</main>
+			</div>
 		</>
 	);
 }
 
 function Card({ title, description, action, children }: { title: string; description: string; action?: React.ReactNode; children: React.ReactNode }) {
 	return (
-		<section className="rounded-xl border bg-background">
-			<header className="flex flex-wrap items-start justify-between gap-3 border-b p-5">
+		<section className="overflow-hidden rounded-2xl border bg-card shadow-[var(--shadow-card)]">
+			<header className="flex flex-wrap items-start justify-between gap-3 border-b bg-muted/30 px-6 py-5">
 				<div>
-					<h2 className="font-semibold">{title}</h2>
+					<h2 className="text-base font-semibold">{title}</h2>
 					<p className="text-sm text-muted-foreground">{description}</p>
 				</div>
 				{action}
 			</header>
-			<div className="p-5">{children}</div>
+			<div className="p-6">{children}</div>
 		</section>
 	);
 }
