@@ -115,18 +115,63 @@ export default function BookPage() {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-b from-rose-50 to-background dark:from-rose-950/20">
-			<header className="mx-auto flex max-w-3xl items-center justify-between px-4 py-5">
-				<Logo name={settings.businessName} />
-				<span className="text-xs text-muted-foreground">Times shown in your local time</span>
-			</header>
-			<main className="mx-auto max-w-3xl px-4 pb-16">
+		<div className="min-h-screen bg-background lg:grid lg:grid-cols-[400px_minmax(0,1fr)]">
+			<aside className="relative overflow-hidden bg-[oklch(0.145_0_0)] px-6 py-6 text-white lg:sticky lg:top-0 lg:h-screen lg:px-10 lg:py-10">
+				<div className="bg-brand-gradient pointer-events-none absolute -left-24 -top-24 size-72 rounded-full opacity-30 blur-3xl" />
+				<div className="bg-brand-gradient pointer-events-none absolute -bottom-32 -right-20 hidden size-80 rounded-full opacity-20 blur-3xl lg:block" />
+				<div className="relative flex h-full flex-col">
+					<Logo name="Online booking" inverted />
+					<div className="mt-8 lg:mt-16">
+						<p className="text-xs font-semibold uppercase tracking-[0.16em] text-red-300">Book with</p>
+						<h1 className="mt-2 text-3xl font-semibold leading-tight lg:text-4xl">{settings.businessName}</h1>
+						<p className="mt-3 max-w-sm text-sm leading-relaxed text-white/60">
+							Pick a service and a time that suits you. You&apos;ll get a confirmation straight away and a reminder before your visit.
+						</p>
+					</div>
+					{service && step !== "service" && (
+						<div className="mt-6 rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur">
+							<p className="text-xs uppercase tracking-wider text-white/45">Your booking</p>
+							<p className="mt-1.5 font-display font-semibold">{service.name}</p>
+							<div className="mt-2 space-y-1 text-sm text-white/70">
+								<p className="flex items-center gap-2">
+									<Clock className="size-3.5" /> {service.durationMin} min · {money(service.price)}
+								</p>
+								{slot && (
+									<p className="flex items-center gap-2">
+										<CalendarPlus className="size-3.5" /> {format(slot.start, "EEE d MMM, HH:mm")}
+									</p>
+								)}
+								{slot && (
+									<p className="flex items-center gap-2">
+										<User className="size-3.5" /> {staff.find((s) => s.id === slot.staffId)?.name}
+									</p>
+								)}
+							</div>
+						</div>
+					)}
+					<ul className="mt-auto hidden space-y-3 pt-10 text-sm text-white/65 lg:block">
+						<li className="flex items-center gap-3">
+							<span className="flex size-7 items-center justify-center rounded-full bg-white/10"><Check className="size-3.5" /></span>
+							Only real, free times are shown
+						</li>
+						<li className="flex items-center gap-3">
+							<span className="flex size-7 items-center justify-center rounded-full bg-white/10"><Check className="size-3.5" /></span>
+							Add it to Google, Apple or Outlook calendar
+						</li>
+						<li className="flex items-center gap-3">
+							<span className="flex size-7 items-center justify-center rounded-full bg-white/10"><Check className="size-3.5" /></span>
+							Times shown in your local time
+						</li>
+					</ul>
+				</div>
+			</aside>
+			<main className="mx-auto w-full max-w-3xl px-5 py-8 lg:px-12 lg:py-14">
 				<Steps step={step} />
-				<div className="mt-6 rounded-2xl border bg-background p-5 shadow-sm sm:p-8">
+				<div className="mt-8">
 					{step === "service" && (
 						<section>
-							<h1 className="text-2xl font-bold tracking-tight">Book an appointment</h1>
-							<p className="mt-1 text-muted-foreground">Choose a service to see available times. It takes under a minute.</p>
+							<h2 className="text-2xl font-semibold">Choose a service</h2>
+							<p className="mt-1 text-muted-foreground">Select what you&apos;d like to book. You&apos;ll see open times next.</p>
 							<div className="mt-6 grid gap-3 sm:grid-cols-2">
 								{services.map((s) => (
 									<button
@@ -138,7 +183,7 @@ export default function BookPage() {
 											setSlot(null);
 											setStep("time");
 										}}
-										className="group rounded-xl border p-4 text-left transition hover:border-rose-400 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
+										className="group relative rounded-2xl border bg-card p-5 text-left shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:border-red-400/60 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
 									>
 										<div className="flex items-center gap-2">
 											<span className={cn("size-2.5 rounded-full", COLOR_DOT[s.color])} />
@@ -160,9 +205,9 @@ export default function BookPage() {
 					{step === "time" && service && (
 						<section>
 							<BackButton onClick={() => setStep("service")} />
-							<h2 className="text-xl font-bold tracking-tight">{service.name}</h2>
-							<p className="text-sm text-muted-foreground">
-								{service.durationMin} min · {money(service.price)}
+							<h2 className="text-2xl font-semibold">Pick a time</h2>
+							<p className="mt-1 text-muted-foreground">
+								{service.name} · {service.durationMin} min · {money(service.price)}
 							</p>
 
 							<Label className="mt-6 mb-2 block">Who would you like?</Label>
@@ -177,7 +222,7 @@ export default function BookPage() {
 										}}
 										className={cn(
 											"flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm transition",
-											staffId === s.id ? "border-rose-500 bg-rose-500 text-white" : "hover:border-rose-300",
+											staffId === s.id ? "border-foreground bg-foreground text-background" : "bg-card hover:border-foreground/40",
 										)}
 									>
 										{s.id === "any" ? <Sparkles className="size-3.5" /> : <User className="size-3.5" />}
@@ -201,7 +246,7 @@ export default function BookPage() {
 											}}
 											className={cn(
 												"flex w-16 shrink-0 flex-col items-center rounded-xl border py-2 text-sm transition disabled:cursor-not-allowed disabled:opacity-40",
-												isSameDay(d, day) ? "border-rose-500 bg-rose-500 text-white" : "hover:border-rose-300",
+												isSameDay(d, day) ? "bg-brand-gradient border-transparent text-white shadow-[var(--shadow-glow)]" : "bg-card hover:border-foreground/40",
 											)}
 										>
 											<span className="text-xs uppercase">{format(d, "EEE")}</span>
@@ -229,7 +274,7 @@ export default function BookPage() {
 												setErrors({});
 												setStep("details");
 											}}
-											className="rounded-lg border py-2 text-sm font-medium transition hover:border-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40"
+											className="rounded-xl border bg-card py-2.5 text-sm font-semibold tabular-nums transition hover:border-red-500 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-500/10 dark:hover:text-red-300"
 										>
 											{format(s.start, "HH:mm")}
 										</button>
@@ -242,13 +287,8 @@ export default function BookPage() {
 					{step === "details" && service && slot && (
 						<section>
 							<BackButton onClick={() => setStep("time")} />
-							<div className="mb-6 rounded-xl bg-muted/60 p-4 text-sm">
-								<p className="font-semibold">{service.name}</p>
-								<p className="text-muted-foreground">
-									{format(slot.start, "EEEE d MMMM, HH:mm")} – {format(slot.end, "HH:mm")} · with{" "}
-									{staff.find((s) => s.id === slot.staffId)?.name}
-								</p>
-							</div>
+							<h2 className="text-2xl font-semibold">Your details</h2>
+							<p className="mb-6 mt-1 text-muted-foreground">We only use these to confirm and remind you about this appointment.</p>
 							<form
 								className="grid gap-4"
 								onSubmit={(e) => {
@@ -271,7 +311,7 @@ export default function BookPage() {
 								<Field id="notes" label="Anything we should know? (optional)" error={errors.notes}>
 									<Textarea id="notes" value={details.notes} onChange={(e) => update("notes", e.target.value)} />
 								</Field>
-								<Button type="submit" size="lg" className="bg-rose-600 hover:bg-rose-700">
+								<Button type="submit" size="lg" className="bg-brand-gradient h-12 rounded-xl border-0 text-base shadow-[var(--shadow-glow)]">
 									Confirm booking
 								</Button>
 								<p className="text-center text-xs text-muted-foreground">
@@ -282,11 +322,11 @@ export default function BookPage() {
 					)}
 
 					{step === "done" && confirmed && icsEvent && (
-						<section className="text-center">
-							<div className="mx-auto flex size-14 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600">
+						<section className="rounded-3xl border bg-card px-6 py-12 text-center shadow-[var(--shadow-card)]">
+							<div className="bg-brand-gradient mx-auto flex size-16 items-center justify-center rounded-full text-white shadow-[var(--shadow-glow)]">
 								<Check className="size-7" />
 							</div>
-							<h2 className="mt-4 text-2xl font-bold tracking-tight">You&apos;re booked, {confirmed.customer?.name.split(" ")[0]}!</h2>
+							<h2 className="mt-5 text-3xl font-semibold">You&apos;re booked, {confirmed.customer?.name.split(" ")[0]}!</h2>
 							<p className="mt-1 text-muted-foreground">
 								{confirmed.title} with {confirmed.user.name}
 								<br />
@@ -318,8 +358,8 @@ export default function BookPage() {
 						</section>
 					)}
 				</div>
-				<p className="mt-6 text-center text-xs text-muted-foreground">
-					Demo booking page. Bookings are saved in this browser and appear instantly on the dashboard.
+				<p className="mt-10 border-t pt-5 text-xs text-muted-foreground">
+					Demo booking page. Bookings are saved in this browser and appear on the Today view and calendar straight away.
 				</p>
 			</main>
 		</div>
@@ -341,8 +381,8 @@ function Steps({ step }: { step: Step }) {
 					<span
 						className={cn(
 							"flex size-6 shrink-0 items-center justify-center rounded-full border text-xs",
-							i < index && "border-emerald-500 bg-emerald-500 text-white",
-							i === index && "border-rose-500 bg-rose-500 text-white",
+							i < index && "border-foreground bg-foreground text-background",
+							i === index && "bg-brand-gradient border-transparent text-white",
 						)}
 					>
 						{i < index ? <Check className="size-3.5" /> : i + 1}
