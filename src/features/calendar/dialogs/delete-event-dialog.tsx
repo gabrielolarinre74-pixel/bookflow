@@ -24,9 +24,9 @@ export default function DeleteEventDialog({ eventId }: DeleteEventDialogProps) {
   const deleteEvent = () => {
     try {
       removeEvent(eventId);
-      toast.success("Event deleted successfully.");
+      toast.success("Appointment deleted");
     } catch {
-      toast.error("Error deleting event.");
+      toast.error("Could not delete the appointment. Please try again.");
     }
   };
 
@@ -44,15 +44,15 @@ export default function DeleteEventDialog({ eventId }: DeleteEventDialogProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Delete this appointment?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your
-            event and remove event data from our servers.
+            It will be removed from the calendar and the reminder queue. To keep
+            a record instead, mark it as cancelled.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteEvent}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={deleteEvent}>Delete</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

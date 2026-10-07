@@ -127,7 +127,7 @@ export const AgendaEvents: FC = () => {
             ))}
           </CommandGroup>
         ))}
-        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandEmpty>No matching appointments.</CommandEmpty>
       </CommandList>
     </Command>
   );

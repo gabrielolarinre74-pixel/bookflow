@@ -128,7 +128,7 @@ export function DndProvider({ children }: DndProviderProps) {
         updateEvent(updatedEvent);
         toast.success("Appointment rescheduled");
       } catch {
-        toast.error("Failed to update event");
+        toast.error("Could not reschedule. Please try again.");
       }
     },
     [updateEvent],

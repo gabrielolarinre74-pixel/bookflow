@@ -51,7 +51,7 @@ export function EventListDialog({
             <div className="flex items-center gap-2">
               <EventBullet color={cellEvents[0]?.color} className="" />
               <p className="text-sm font-medium">
-                Events on {format(date, "EEEE, MMMM d, yyyy")}
+                Appointments on {format(date, "EEEE d MMMM yyyy")}
               </p>
             </div>
           </ModalTitle>
@@ -81,7 +81,7 @@ export function EventListDialog({
             ))
           ) : (
             <p className="text-sm text-muted-foreground">
-              No events for this date.
+              No appointments on this day.
             </p>
           )}
         </div>
