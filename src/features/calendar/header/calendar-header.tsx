@@ -22,7 +22,7 @@ export function CalendarHeader() {
   const { view, events } = useCalendar();
 
   return (
-    <div className="flex flex-col gap-4 border-b p-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-4 border-b px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
       <motion.div
         className="flex items-center gap-3"
         variants={slideFromLeft}
@@ -50,7 +50,7 @@ export function CalendarHeader() {
           <UserSelect />
 
           <AddEditEventDialog>
-            <Button>
+            <Button className="bg-brand-gradient rounded-lg border-0 shadow-[var(--shadow-glow)]">
               <Plus className="h-4 w-4" />
               New appointment
             </Button>

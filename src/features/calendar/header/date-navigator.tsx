@@ -44,7 +44,7 @@ export function DateNavigator({ view, events }: IProps) {
     <div className="space-y-0.5">
       <div className="flex items-center gap-2">
         <motion.span
-          className="text-lg font-semibold"
+          className="whitespace-nowrap font-display text-xl font-semibold"
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={transition}
@@ -55,12 +55,13 @@ export function DateNavigator({ view, events }: IProps) {
           <MotionBadge
             key={eventCount}
             variant="secondary"
+            className="rounded-full font-medium"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={transition}
           >
-            {eventCount} events
+            {eventCount} {eventCount === 1 ? "appointment" : "appointments"}
           </MotionBadge>
         </AnimatePresence>
       </div>
@@ -69,7 +70,7 @@ export function DateNavigator({ view, events }: IProps) {
         <MotionButton
           variant="outline"
           size="icon"
-          className="h-6 w-6"
+          className="h-6 w-6 rounded-md"
           onClick={handlePrevious}
           variants={buttonHover}
           whileHover="hover"
@@ -90,7 +91,7 @@ export function DateNavigator({ view, events }: IProps) {
         <MotionButton
           variant="outline"
           size="icon"
-          className="h-6 w-6"
+          className="h-6 w-6 rounded-md"
           onClick={handleNext}
           variants={buttonHover}
           whileHover="hover"

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+import { isToday } from "date-fns";
 import {addDays, format, isSameDay, parseISO, startOfWeek} from "date-fns";
 import {motion} from "framer-motion";
 import {ScrollArea} from "@/components/ui/scroll-area";
@@ -71,7 +73,7 @@ export function CalendarWeekView({singleDayEvents, multiDayEvents}: IProps) {
                             {weekDays.map((day, index) => (
                                 <motion.span
                                     key={day.toISOString()}
-                                    className="py-1 sm:py-2 text-center text-xs font-medium text-t-quaternary"
+                                    className="py-1 sm:py-2 text-center text-xs font-medium text-muted-foreground"
                                     initial={{opacity: 0, y: -10}}
                                     animate={{opacity: 1, y: 0}}
                                     transition={{delay: index * 0.05, ...transition}}
@@ -79,17 +81,22 @@ export function CalendarWeekView({singleDayEvents, multiDayEvents}: IProps) {
                                     {/* Mobile: Show only day abbreviation and number */}
                                     <span className="block sm:hidden">
 									{format(day, "EEE").charAt(0)}
-                                        <span className="block font-semibold text-t-secondary text-xs">
+                                        <span className="block font-semibold text-foreground text-xs">
 										{format(day, "d")}
 									</span>
 								</span>
-                                    {/* Desktop: Show full format */}
-                                    <span className="hidden sm:inline">
-									{format(day, "EE")}{" "}
-                                        <span className="ml-1 font-semibold text-t-secondary">
-										{format(day, "d")}
-									</span>
-								</span>
+                                    {/* Desktop: weekday label with date chip, today highlighted */}
+                                    <span className="hidden items-center justify-center gap-2 sm:flex">
+                                        <span className="text-[11px] font-semibold uppercase tracking-wider">{format(day, "EEE")}</span>
+                                        <span
+                                            className={cn(
+                                                "flex size-7 items-center justify-center rounded-full font-display text-sm font-semibold text-foreground",
+                                                isToday(day) && "bg-brand-gradient text-white shadow-[var(--shadow-glow)]",
+                                            )}
+                                        >
+                                            {format(day, "d")}
+                                        </span>
+                                    </span>
                                 </motion.span>
                             ))}
                         </div>
@@ -112,7 +119,7 @@ export function CalendarWeekView({singleDayEvents, multiDayEvents}: IProps) {
                                 >
                                     <div className="absolute -top-3 right-2 flex h-6 items-center">
                                         {index !== 0 && (
-                                            <span className="text-xs text-t-quaternary">
+                                            <span className="text-xs text-muted-foreground">
 												{format(
                                                     new Date().setHours(hour, 0, 0, 0),
                                                     use24HourFormat ? "HH:00" : "h a",

@@ -10,29 +10,22 @@ import type { IEvent } from "@/features/calendar/interfaces";
 import { EventBullet } from "@/features/calendar/views/month-view/event-bullet";
 
 const eventBadgeVariants = cva(
-  "flex w-full h-6.5 select-none items-center justify-between gap-1.5 truncate whitespace-nowrap rounded-md border px-2 text-xs cursor-grab",
+  "flex w-full h-6.5 select-none items-center justify-between gap-1.5 truncate whitespace-nowrap rounded-md border px-2 text-xs font-medium cursor-grab",
   {
     variants: {
       color: {
-        // Colored variants
-        blue: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-300",
-        green:
-          "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
-        red: "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
-        yellow:
-          "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
-        teal:
-          "border-teal-200 bg-teal-50 text-teal-700 dark:border-teal-800 dark:bg-teal-950 dark:text-teal-300",
-        orange:
-          "border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300",
-
-        // Dot variants
-        "blue-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-blue-600",
-        "green-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-green-600",
-        "red-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-red-600",
-        "orange-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-orange-600",
-        "teal-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-teal-600",
-        "yellow-dot": "bg-bg-secondary text-t-primary [&_svg]:fill-yellow-600",
+        blue: "border-0 border-l-[3px] border-blue-500 bg-blue-50 text-blue-900 dark:bg-blue-500/15 dark:text-blue-100",
+        green: "border-0 border-l-[3px] border-green-500 bg-green-50 text-green-900 dark:bg-green-500/15 dark:text-green-100",
+        red: "border-0 border-l-[3px] border-red-500 bg-red-50 text-red-900 dark:bg-red-500/15 dark:text-red-100",
+        yellow: "border-0 border-l-[3px] border-yellow-500 bg-yellow-50 text-yellow-900 dark:bg-yellow-500/15 dark:text-yellow-100",
+        teal: "border-0 border-l-[3px] border-teal-500 bg-teal-50 text-teal-900 dark:bg-teal-500/15 dark:text-teal-100",
+        orange: "border-0 border-l-[3px] border-orange-500 bg-orange-50 text-orange-900 dark:bg-orange-500/15 dark:text-orange-100",
+        "blue-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-blue-500",
+        "green-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-green-500",
+        "red-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-red-500",
+        "yellow-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-yellow-500",
+        "teal-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-teal-500",
+        "orange-dot": "border-transparent bg-muted/70 text-foreground [&_svg]:fill-orange-500",
       },
       multiDayPosition: {
         first: "relative z-10 mr-0 rounded-r-none border-r-0 [&>span]:mr-2.5",
