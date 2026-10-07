@@ -1,9 +1,8 @@
-name: CI & Deploy
+name: Deploy to GitHub Pages (manual, disabled)
 
+# Automatic deploys are turned off. This workflow only runs if it is
+# started by hand from the Actions tab (and the workflow is enabled).
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -35,12 +34,10 @@ jobs:
           NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
       - run: touch out/.nojekyll
       - uses: actions/upload-pages-artifact@v3
-        if: github.ref == 'refs/heads/main'
         with:
           path: out
 
   deploy:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
