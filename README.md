@@ -1,94 +1,108 @@
+<div align="center">
+
 # BookFlow
 
-**Online booking, scheduling and automatic reminders for salons, spas, clinics, studios and other appointment-based businesses.**
+**Take bookings while you sleep. Fill your calendar, not your inbox.**
 
-Many small service businesses still take bookings by phone, DM and paper diary. That means double-bookings, gaps in the day, and customers who simply forget to show up. BookFlow gives the business a public booking page that only offers times that are actually free, a team calendar that updates as bookings come in, and a reminder queue so every customer gets a message before their appointment.
+An online booking and reminder system for salons, spas, clinics, studios, coaches and any business that runs on appointments.
 
-**Try it:** clone the repo and run it locally in a couple of minutes (see [Run locally](#run-locally)). It opens in demo mode with fictional sample data, so there is nothing to sign up for and no backend to configure.
+![BookFlow Today view](docs/screenshots/today.png)
 
-![Dashboard](docs/screenshots/dashboard.png)
+</div>
+
+## Why BookFlow
+
+Appointment businesses lose money in three quiet ways: clients who can't book outside opening hours, double-bookings when two people take calls at once, and no-shows from clients who simply forgot. BookFlow handles all three:
+
+1. **A booking page that's always open.** Clients choose a service, a team member and a time on their phone. Only times that are really free are shown.
+2. **One calendar for the whole team.** Online and in-person bookings land in the same place, and BookFlow won't let anyone double-book a team member.
+3. **Reminders that go out on time.** Every confirmed appointment gets reminders queued at the times you choose, ready to send on WhatsApp or by email in one tap.
 
 ## Features
 
-### Public booking page (`/book`)
-- Four-step flow: service → date & time → details → confirmation, with a progress indicator
-- Customers choose a specific team member or **"Anyone available"**, and BookFlow assigns the first free person
-- **Real availability engine**: slots respect opening hours, service duration, clean-up buffer time, each team member's existing appointments, minimum notice and how far ahead bookings are allowed. Closed days are greyed out.
-- The slot is checked again right before saving, so two people can't grab the same time
-- Validated details form (name, email, phone, notes) with clear error messages
-- Confirmation screen with **Add to calendar (.ics)** and **Google Calendar** links
-- Mobile-first layout
+**Booking page**
+- Split-screen design: a dark brand panel with a live summary of the booking, and a clean step-by-step flow (service → time → details → done)
+- "Anyone available" or a specific team member
+- A real availability engine that respects opening hours, service length, clean-up buffers, each person's existing appointments, minimum notice and how far ahead clients can book
+- The chosen time is checked again just before saving, so two clients can't take the same slot
+- Validated contact form with friendly inline errors
+- Confirmation screen with an .ics file (Apple, Outlook) and a Google Calendar link
 
-### Team calendar (dashboard)
-- Day, week, month, year and agenda views
-- Drag and drop to reschedule. Moves that would clash with another appointment for the same team member are blocked.
-- Filter by team member and by service colour (the two filters combine)
-- Create and edit appointments with service and staff pickers. The end time is filled in from the service duration, and conflicts are caught before saving.
-- Appointment details with customer contact info, status actions (completed, no-show, cancel), a one-tap WhatsApp reminder and an .ics download
+**Today view**
+- Greeting with a one-line summary of the day
+- Metrics strip: appointments today, revenue booked this week, share of bookings made online, no-show rate
+- Today's schedule as a timeline, with the current appointment marked "In progress"
+- **Team load**: how much of each person's day is booked, as a share of opening hours
+- Coming-up list for the next confirmed appointments
 
-### Automatic reminders
-- Reminder queue for every confirmed appointment in the next 72 hours, built from configurable offsets (for example 24 h and 2 h before)
-- Each reminder is marked **due**, **scheduled** or **sent**
-- Send in one click via **WhatsApp** (wa.me link with the message pre-filled) or **email**, then mark it as sent
-- Editable message template with `{name}`, `{service}`, `{staff}`, `{date}`, `{time}` and `{business}` placeholders and a live preview
+**Calendar**
+- Day, week, month, year and agenda views with a segmented switcher
+- Colour-coded appointment cards with the client's name
+- Drag to reschedule, with clash detection per team member
+- Filters by team member and service that work together
+- Create or edit an appointment: pick a service and the end time fills itself in
+- Appointment details with client contact info, status (completed, no-show, cancelled), a WhatsApp reminder button and an .ics download
 
-### Business insights
-- Today's appointments and how many are still to come
-- Booked revenue and appointment count for the current week
-- Share of bookings made online and no-show rate over the last 30 days
-- "Next up" list of upcoming appointments
+**Reminders**
+- Queue built from your reminder times (for example 24 hours and 2 hours before)
+- Each reminder is marked due, scheduled or sent
+- Send by WhatsApp (message pre-filled) or email, then mark it as sent
+- Editable message with `{name}`, `{service}`, `{staff}`, `{date}`, `{time}` and `{business}` placeholders and a live chat-bubble preview
 
-### Settings
+**Settings**
 - Business name, currency and minimum notice
-- Weekly opening hours editor with validation
-- Services editor: name, colour, duration, buffer and price
-- Reset to sample data
+- Weekly opening hours with validation
+- Services: name, colour, length, buffer and price
+- One-click reset to the sample data
 
-| Choose a time | Your details |
+## Screenshots
+
+| Pick a time | Your details |
 | --- | --- |
-| ![Choose a time](docs/screenshots/booking-times.png) | ![Details form](docs/screenshots/booking-details.png) |
-| **Confirmation** | **Settings** |
-| ![Confirmation](docs/screenshots/booking-confirmed.png) | ![Settings](docs/screenshots/settings.png) |
-| **Dark mode** | **Booking page on mobile** |
-| ![Dark mode](docs/screenshots/dashboard-dark.png) | ![Mobile](docs/screenshots/booking-mobile.png) |
+| ![Pick a time](docs/screenshots/booking-times.png) | ![Details](docs/screenshots/booking-details.png) |
+| **Booked** | **Team calendar** |
+| ![Confirmation](docs/screenshots/booking-confirmed.png) | ![Calendar](docs/screenshots/calendar.png) |
+| **Settings** | **Dark mode** |
+| ![Settings](docs/screenshots/settings.png) | ![Dark mode](docs/screenshots/today-dark.png) |
 
-All names, bookings and figures in the demo are fictional sample data generated in the browser.
+<p align="center"><img src="docs/screenshots/booking-mobile.png" alt="Booking page on a phone" width="320" /></p>
+
+The business, team, clients and figures shown are fictional sample data generated in the browser.
+
+## Design
+
+- **Palette:** a red-to-orange gradient for brand moments, on white surfaces with near-black ink and a black sidebar
+- **Type:** Sora for headings and numbers, DM Sans for everything else, both self-hosted
+- **Details:** soft layered shadows, 14px radius, accent-bar appointment cards, and a glow on primary actions
+- Light and dark themes
 
 ## Tech stack
 
-- **Next.js 16** (App Router, static export) with **React 19** and **TypeScript**
-- **Tailwind CSS v4**, shadcn/ui and Radix primitives, Framer Motion
-- **Zustand** with `persist` for state and local storage
-- **React Hook Form** + **Zod** for validation
-- **date-fns** for date handling
-- **Vitest** unit tests for the availability engine, reminders, calendar export and stats
-- **GitHub Actions** for lint, tests and build checks on every push
-
-## Project structure
+| Area | Tools |
+| --- | --- |
+| Framework | Next.js 16 (App Router, static export), React 19, TypeScript |
+| UI | Tailwind CSS v4, Radix primitives, Framer Motion, Lucide icons |
+| State | Zustand with versioned `localStorage` persistence |
+| Forms | React Hook Form + Zod |
+| Dates | date-fns |
+| Quality | Vitest unit tests, ESLint, GitHub Actions CI |
 
 ```
 src/
   app/
-    page.tsx             # dashboard: KPIs, team calendar, reminder queue
-    book/page.tsx        # public booking flow
-    settings/page.tsx    # business, hours, services, reminders
+    (workspace)/          # Today, Calendar and Settings inside the app shell
+    book/                 # public booking page
   features/
-    booking/             # domain logic (pure, unit-tested)
-      availability.ts    # slot engine + conflict detection
-      reminders.ts       # reminder queue, templates, WhatsApp/email links
-      ics.ts             # .ics files and Google Calendar links
-      stats.ts           # dashboard metrics
-      store.ts           # persisted Zustand store
-      seed.ts            # sample services, team and bookings
-    calendar/            # calendar views, dialogs, drag and drop
-  components/            # navigation, providers, reminder queue, UI primitives
+    booking/              # availability, reminders, .ics, stats, store, sample data (pure + tested)
+    calendar/             # calendar views, dialogs, drag and drop
+  components/             # app shell, reminder panel, UI primitives
 ```
 
-The booking rules live in plain TypeScript functions with no UI dependencies, so they can be moved to an API route or backend unchanged when the app gets a database.
+The booking rules are plain TypeScript functions with no UI code, so they can move behind an API unchanged when the app gets a database.
 
 ## Run locally
 
-**Requirements:** Node.js 20 or newer and pnpm (`npm install -g pnpm` or `corepack enable`).
+You need Node.js 20+ and pnpm (`corepack enable` or `npm i -g pnpm`).
 
 ```bash
 git clone https://github.com/gabrielolarinre74-pixel/bookflow.git
@@ -97,33 +111,31 @@ pnpm install
 pnpm dev
 ```
 
-Then open http://localhost:3000.
+Open http://localhost:3000 for the workspace and http://localhost:3000/book for the client booking page.
 
-### Demo mode
+**Demo mode.** The app opens with a sample business, team and a month of appointments, so every screen has something to show. Everything you do is saved in your browser's `localStorage`, and nothing is sent anywhere. **Settings → Reset demo data** starts over.
 
-The app starts with fictional sample data so every screen (the dashboard, the public booking page (/book) and Settings) has something to show. Everything you add or change is saved in your browser's `localStorage`. Nothing is sent to a server. To start over, use **Reset** in Settings.
-
-### Other commands
+Other commands:
 
 ```bash
-pnpm test
+pnpm test     # unit tests
 pnpm lint
-pnpm build
-pnpm start
+pnpm build    # static site in out/
+pnpm start    # serve the static build
 ```
 
-`pnpm build` writes a static site to `out/`, and `pnpm start` serves it. No environment variables or API keys are needed (see `.env.example`).
+No API keys are needed. `.env.example` lists the one optional setting, used to host the site under a sub-path.
 
-## Deployment
+## Hosting
 
-The production build is a static site, so `out/` can be hosted on Vercel, Netlify, Cloudflare Pages, S3 or any static host. GitHub Actions (`.github/workflows/ci.yml`) runs lint, tests and the build on every push and pull request. A GitHub Pages workflow is included, but it is turned off and only runs if someone starts it by hand.
+`pnpm build` produces a static site that runs on Vercel, Netlify, Cloudflare Pages, S3 or any static host. CI (`.github/workflows/ci.yml`) lints, tests and builds every push. A GitHub Pages workflow is included but turned off, and only runs if started by hand.
 
 ## Roadmap
 
-- Database and accounts (Supabase or Postgres) so bookings sync across devices
-- Automatic sending through the WhatsApp Business API, SMS or email providers
-- Deposits and online payment at booking time
-- Embeddable booking widget for an existing website
+- Accounts and a database so bookings sync across devices
+- Automatic sending through the WhatsApp Business API, SMS or email
+- Deposits and card payments at booking
+- An embeddable booking widget for existing websites
 
 ## License
 
