@@ -72,7 +72,17 @@ export const useBookingStore = create<BookingState>()(
 		}),
 		{
 			name: "bookflow",
-			version: 1,
+			version: 2,
+			// v2 retired the purple event colour; map any saved purple items to teal
+			migrate: (persisted, version) => {
+				const state = persisted as Partial<BookingState>;
+				if (version < 2) {
+					const fix = <T extends { color: string }>(x: T): T => (x.color === "purple" ? { ...x, color: "teal" } : x);
+					state.services = state.services?.map(fix);
+					state.bookings = state.bookings?.map(fix);
+				}
+				return state as BookingState;
+			},
 			storage: createJSONStorage(() => localStorage),
 			// Wait for the client before reading localStorage (static export + SSR-safe)
 			skipHydration: true,

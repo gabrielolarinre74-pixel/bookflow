@@ -4,7 +4,7 @@ import type { BusinessSettings, Service, StaffMember, WeeklyHours } from "./type
 
 export const DEFAULT_SERVICES: Service[] = [
 	{ id: "svc-consult", name: "Free discovery call", description: "20-minute call to understand your goals.", durationMin: 20, bufferMin: 10, price: 0, color: "blue" },
-	{ id: "svc-cut", name: "Haircut & style", description: "Wash, cut and finish.", durationMin: 45, bufferMin: 15, price: 35, color: "purple" },
+	{ id: "svc-cut", name: "Haircut & style", description: "Wash, cut and finish.", durationMin: 45, bufferMin: 15, price: 35, color: "teal" },
 	{ id: "svc-color", name: "Colour treatment", description: "Full colour with toner and blow-dry.", durationMin: 120, bufferMin: 15, price: 95, color: "orange" },
 	{ id: "svc-facial", name: "Signature facial", description: "Cleanse, exfoliate, mask and massage.", durationMin: 60, bufferMin: 15, price: 60, color: "green" },
 	{ id: "svc-massage", name: "Deep tissue massage", description: "Targeted pressure for tension relief.", durationMin: 90, bufferMin: 15, price: 80, color: "red" },

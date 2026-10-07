@@ -31,7 +31,7 @@ const PREVIEW_BOOKING: IEvent = {
 	description: "",
 	startDate: previewStart.toISOString(),
 	endDate: new Date(previewStart.getTime() + 45 * 60_000).toISOString(),
-	color: "purple",
+	color: "teal",
 	user: { id: "x", name: "Amara Cole", picturePath: null },
 	customer: { name: "Maya Brooks", email: "maya@example.com", phone: "+1 555 0100" },
 };

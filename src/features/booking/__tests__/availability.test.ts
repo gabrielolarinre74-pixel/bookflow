@@ -3,7 +3,7 @@ import { getAvailableSlots, hasConflict, parseHHMM } from "../availability";
 import type { Service, StaffMember, WeeklyHours } from "../types";
 import { at, booking } from "./helpers";
 
-const service: Service = { id: "cut", name: "Haircut", description: "", durationMin: 60, bufferMin: 15, price: 35, color: "purple" };
+const service: Service = { id: "cut", name: "Haircut", description: "", durationMin: 60, bufferMin: 15, price: 35, color: "teal" };
 const staff: StaffMember[] = [
 	{ id: "amara", name: "Amara Cole", role: "Stylist", picturePath: null, serviceIds: ["cut"] },
 	{ id: "nina", name: "Nina Patel", role: "Stylist", picturePath: null, serviceIds: ["cut"] },

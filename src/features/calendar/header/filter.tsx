@@ -20,7 +20,7 @@ export default function FilterEvents() {
 		"green",
 		"red",
 		"yellow",
-		"purple",
+		"teal",
 		"orange",
 	];
 

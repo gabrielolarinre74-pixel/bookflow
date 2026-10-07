@@ -8,7 +8,7 @@ export function booking(start: Date, minutes: number, overrides: Partial<IEvent>
 		description: "",
 		startDate: start.toISOString(),
 		endDate: new Date(start.getTime() + minutes * 60_000).toISOString(),
-		color: "purple",
+		color: "teal",
 		user: { id: "amara", name: "Amara Cole", picturePath: null },
 		customer: { name: "Maya Brooks", email: "maya@example.com", phone: "+1 555 0100" },
 		status: "confirmed",

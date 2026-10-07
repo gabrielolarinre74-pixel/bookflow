@@ -1,6 +1,6 @@
 import type { TEventColor } from "@/features/calendar/types";
 
-export const COLORS: TEventColor[] = ["blue", "green", "red", "yellow", "purple", "orange"];
+export const COLORS: TEventColor[] = ["blue", "green", "red", "yellow", "teal", "orange"];
 
 /**
  * Static class names so Tailwind can see them at build time
@@ -11,6 +11,6 @@ export const COLOR_DOT: Record<TEventColor, string> = {
 	green: "bg-green-600 dark:bg-green-500",
 	red: "bg-red-600 dark:bg-red-500",
 	yellow: "bg-yellow-500 dark:bg-yellow-400",
-	purple: "bg-purple-600 dark:bg-purple-500",
+	teal: "bg-teal-600 dark:bg-teal-500",
 	orange: "bg-orange-600 dark:bg-orange-500",
 };

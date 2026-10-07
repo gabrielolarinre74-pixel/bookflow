@@ -4,5 +4,5 @@ export type TEventColor =
 	| "green"
 	| "red"
 	| "yellow"
-	| "purple"
+	| "teal"
 	| "orange";
