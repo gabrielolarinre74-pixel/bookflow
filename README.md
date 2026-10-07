@@ -4,7 +4,7 @@
 
 Many small service businesses still take bookings by phone, DM and paper diary. That means double-bookings, gaps in the day, and customers who simply forget to show up. BookFlow gives the business a public booking page that only offers times that are actually free, a team calendar that updates as bookings come in, and a reminder queue so every customer gets a message before their appointment.
 
-**Live demo:** [Open in StackBlitz](https://stackblitz.com/github/gabrielolarinre74-pixel/bookflow) (runs in your browser with sample data, no sign-up)
+**Try it:** clone the repo and run it locally in a couple of minutes (see [Run locally](#run-locally)). It opens in demo mode with fictional sample data, so there is nothing to sign up for and no backend to configure.
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
@@ -62,7 +62,7 @@ All names, bookings and figures in the demo are fictional sample data generated 
 - **React Hook Form** + **Zod** for validation
 - **date-fns** for date handling
 - **Vitest** unit tests for the availability engine, reminders, calendar export and stats
-- **GitHub Actions** for lint, tests, build and deployment
+- **GitHub Actions** for lint, tests and build checks on every push
 
 ## Project structure
 
@@ -86,22 +86,37 @@ src/
 
 The booking rules live in plain TypeScript functions with no UI dependencies, so they can be moved to an API route or backend unchanged when the app gets a database.
 
-## Getting started
+## Run locally
+
+**Requirements:** Node.js 20 or newer and pnpm (`npm install -g pnpm` or `corepack enable`).
 
 ```bash
+git clone https://github.com/gabrielolarinre74-pixel/bookflow.git
+cd bookflow
 pnpm install
-pnpm dev          # http://localhost:3000
-pnpm test         # unit tests
-pnpm lint
-pnpm build        # static site in out/
-pnpm start        # serve the static build
+pnpm dev
 ```
 
-No secrets are required. `.env.example` lists the one optional variable (`NEXT_PUBLIC_BASE_PATH`) for hosting under a sub-path.
+Then open http://localhost:3000.
+
+### Demo mode
+
+The app starts with fictional sample data so every screen (the dashboard, the public booking page (/book) and Settings) has something to show. Everything you add or change is saved in your browser's `localStorage`. Nothing is sent to a server. To start over, use **Reset** in Settings.
+
+### Other commands
+
+```bash
+pnpm test
+pnpm lint
+pnpm build
+pnpm start
+```
+
+`pnpm build` writes a static site to `out/`, and `pnpm start` serves it. No environment variables or API keys are needed (see `.env.example`).
 
 ## Deployment
 
-The app is exported as a static site, so it runs on Vercel, Netlify, GitHub Pages, S3 or any static host. `.github/workflows/deploy.yml` runs lint, tests and the build on every push to `main`, then publishes `out/` to GitHub Pages.
+The production build is a static site, so `out/` can be hosted on Vercel, Netlify, Cloudflare Pages, S3 or any static host. GitHub Actions (`.github/workflows/ci.yml`) runs lint, tests and the build on every push and pull request. A GitHub Pages workflow is included, but it is turned off and only runs if someone starts it by hand.
 
 ## Roadmap
 
