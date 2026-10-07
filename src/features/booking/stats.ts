@@ -41,3 +41,45 @@ export function dashboardStats(bookings: IEvent[], now = new Date()) {
 			.slice(0, 5),
 	};
 }
+
+export interface TeamLoad {
+	staffId: string;
+	name: string;
+	role: string;
+	appointments: number;
+	bookedMin: number;
+	openMin: number;
+	/** 0–1 share of today's opening hours that is booked */
+	load: number;
+}
+
+/** How busy each team member is today, as a share of the business's opening hours. */
+export function teamLoadToday(
+	bookings: IEvent[],
+	staff: { id: string; name: string; role: string }[],
+	hours: ({ open: string; close: string } | null)[],
+	now = new Date(),
+): TeamLoad[] {
+	const day = hours[now.getDay()];
+	const toMin = (v: string) => {
+		const [h, m] = v.split(":").map(Number);
+		return h * 60 + m;
+	};
+	const openMin = day ? Math.max(0, toMin(day.close) - toMin(day.open)) : 0;
+	const today0 = startOfDay(now).getTime();
+	return staff.map((s) => {
+		const mine = bookings.filter(
+			(b) => b.user.id === s.id && b.status !== "cancelled" && new Date(b.startDate).getTime() >= today0 && new Date(b.startDate).getTime() < today0 + DAY,
+		);
+		const bookedMin = mine.reduce((sum, b) => sum + (new Date(b.endDate).getTime() - new Date(b.startDate).getTime()) / 60_000, 0);
+		return {
+			staffId: s.id,
+			name: s.name,
+			role: s.role,
+			appointments: mine.length,
+			bookedMin,
+			openMin,
+			load: openMin ? Math.min(1, bookedMin / openMin) : 0,
+		};
+	});
+}

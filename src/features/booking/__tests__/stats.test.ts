@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateSampleBookings } from "../seed";
-import { dashboardStats } from "../stats";
+import { dashboardStats, teamLoadToday } from "../stats";
 import { at, booking } from "./helpers";
 
 // Wednesday 18 March 2026, 12:00
@@ -62,5 +62,30 @@ describe("generateSampleBookings", () => {
 			expect(clash, `${x.title} ${x.startDate}`).toBeUndefined();
 		}
 		expect(a.every((x) => !x.customer || x.customer.email.endsWith("@example.com"))).toBe(true);
+	});
+});
+
+describe("teamLoadToday", () => {
+	const team = [
+		{ id: "amara", name: "Amara Cole", role: "Stylist" },
+		{ id: "nina", name: "Nina Patel", role: "Therapist" },
+	];
+	const hours = [null, null, null, { open: "09:00", close: "17:00" }, null, null, null]; // Wednesday only
+
+	it("returns booked minutes and load as a share of opening hours", () => {
+		const list = [
+			booking(at(2026, 3, 18, 9, 0), 120),
+			booking(at(2026, 3, 18, 13, 0), 120),
+			booking(at(2026, 3, 18, 15, 0), 60, { status: "cancelled" }),
+			booking(at(2026, 3, 19, 9, 0), 60), // tomorrow
+		];
+		const [amara, nina] = teamLoadToday(list, team, hours, now);
+		expect(amara).toMatchObject({ appointments: 2, bookedMin: 240, openMin: 480, load: 0.5 });
+		expect(nina).toMatchObject({ appointments: 0, bookedMin: 0, load: 0 });
+	});
+
+	it("reports zero load on a closed day", () => {
+		const sunday = at(2026, 3, 22, 10, 0);
+		expect(teamLoadToday([], team, hours, sunday).every((t) => t.openMin === 0 && t.load === 0)).toBe(true);
 	});
 });
